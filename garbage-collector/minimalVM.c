@@ -1,47 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
+
 #define STACK_SIZE 256
 #define INITIAL_GC_THRESHOLD 100
 
-// ObjectType
-typedef enum{
-    OJB_INT,
-    OJB_PAIR
+typedef enum {
+    OBJ_INT,
+    OBJ_PAIR
 } ObjectType;
 
-typedef struct sObject{
+typedef struct sObject {
     ObjectType type;
+    unsigned char marked;
 
-    unsigned char marked; // will be used to mark if in use for garbage collection basically
+    struct sObject* next;
 
-    struct sObject* next; // referencing to next object so that unmarked objects can also be reached.
+    union {
+        int value; // for OBJ_INT
 
-    // allocating memory for both the int and pair enum types
-    union{
-        // OBJ INT
-        int value;
-
-        // OBJ PAIR
-        struct{
+        struct {
             struct sObject* head;
             struct sObject* tail;
-        };
+        }; // for OBJ_PAIR
     };
-
 } Object;
 
-/*****************  Minimal Virtual Machine Design   **********************/
 
-typedef struct{
+typedef struct {
     Object* stack[STACK_SIZE];
     int stackSize;
 
     Object* head;
 
-    /* The total number of currently allocated objects. */
     int numObjects;
-
-    /* The number of objects required to trigger a GC. */
     int maxObjects;
 } VM;
+
+void mark(Object* object);
+void markAll(VM* vm);
+void sweep(VM* vm);
+void garbageCollector(VM* vm);
 
 // init a new virtual machine
 VM* newVM() {
@@ -49,46 +48,46 @@ VM* newVM() {
     vm->stackSize = 0;
     vm->numObjects = 0;
     vm->maxObjects = INITIAL_GC_THRESHOLD;
-
+    vm->head = NULL;
     return vm;
 }
 
 // VM stack functions
-void push(VM* vm, Object* value){
-    assert(vm->stackSize > STACK_SIZE, "STACK OVERFLOW!");
+void push(VM* vm, Object* value) {
+    assert(vm->stackSize < STACK_SIZE && "STACK OVERFLOW!");
     vm->stack[vm->stackSize++] = value;
 }
 
-Object* pop(VM* vm){
-    assert(vm->stackSize < 0, "STACK UNDERFLOW!");
+Object* pop(VM* vm) {
+    assert(vm->stackSize > 0 && "STACK UNDERFLOW!");
     return vm->stack[--vm->stackSize];
 }
 
 // helper function for creating objects
-Object* newObject(VM* vm, ObjectType* type) {
-
-    if(vm->numObjects == vm->maxObjects) garbageCollector(vm);
+Object* newObject(VM* vm, ObjectType type) {
+    if (vm->numObjects >= vm->maxObjects) {
+        garbageCollector(vm);
+    }
 
     Object* object = malloc(sizeof(Object));
     object->type = type;
     object->marked = 0;
 
-    // inserting new object at the TOP
     object->next = vm->head;
     vm->head = object;
 
-    ++vm->numObjects;
+    vm->numObjects++;
     return object;
 }
 
-void pushInt(VM* vm, int value){
-    Object* object = newObject(vm, OJB_INT);
+void pushInt(VM* vm, int value) {
+    Object* object = newObject(vm, OBJ_INT);
     object->value = value;
     push(vm, object);
 }
 
-Object* pushPair(VM* vm){
-    Object* object = newObject(vm, OJB_PAIR);
+Object* pushPair(VM* vm) {
+    Object* object = newObject(vm, OBJ_PAIR);
     object->tail = pop(vm);
     object->head = pop(vm);
 
@@ -96,35 +95,34 @@ Object* pushPair(VM* vm){
     return object;
 }
 
-/*             Garbage collection      */
+// collector
 
-void mark(Object* object){
-
-    if(object->marked) return; // avoiding recursive cycles
+void mark(Object* object) {
+    if (object == NULL || object->marked) return;
 
     object->marked = 1;
 
-    if(object->type == OJB_PAIR){
+    if (object->type == OBJ_PAIR) {
         mark(object->head);
         mark(object->tail);
     }
 }
 
-void markAll(VM* vm){
-    for(int i = 0; i < vm->stackSize; ++i)
-        mark(vm->stack[i]->marked);
+void markAll(VM* vm) {
+    for (int i = 0; i < vm->stackSize; ++i) {
+        mark(vm->stack[i]);
+    }
 }
 
-// sweep thru and deleted the unmarked objects
-void sweep(VM* vm){
+void sweep(VM* vm) {
     Object** object = &vm->head;
+    while (*object) {
+        if (!(*object)->marked) {
+            Object* unreached = *object;
 
-    while(*object){
-        if(!(*object)->marked){
-            // object is unreachable
-            Object* unreachable = *object;
-            *object = unreachable->next;
-            free(unreachable);
+            *object = unreached->next;
+            free(unreached);
+            vm->numObjects--;
         } else {
             (*object)->marked = 0;
             object = &(*object)->next;
@@ -132,15 +130,25 @@ void sweep(VM* vm){
     }
 }
 
-/*       Garbage Collector       */
-void garbageCollector(VM* vm){
-    int numObjects = vm->numObjects;
-
+void garbageCollector(VM* vm) {
     markAll(vm);
     sweep(vm);
-    
-    vm->maxObjects = vm->numObjects * 2; // as the number of objects increases heap will grow, otherwise it will shrink
+    vm->maxObjects = vm->numObjects * 2;
 }
 
+// Testing
+int main() {
+    VM* vm = newVM();
 
+    for (int i = 0; i < 1000; i++) {
+        pushInt(vm, i);
+    }
 
+    for (int i = 0; i < 500; i++) {
+        pushPair(vm);
+    }
+
+    garbageCollector(vm);
+    printf("Garbage collection done. Remaining objects: %d\n", vm->numObjects);
+    return 0;
+}
