@@ -1,5 +1,6 @@
 # Utilities from scratch
-[ * ] Garbage Collector
-[ * ] Shell
-[ * ] Regex Matcher
-[ * ] Rate limiter
+ - [x] Garbage Collector
+ - [x] Shell
+ - [x] Regex Matcher
+ - [x] Rate limiter
+ - [x] neural network
