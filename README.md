@@ -1,10 +1,17 @@
 # Utilities from scratch
- - [x] Garbage Collector
- - [x] Shell
- - [x] Regex Matcher
- - [x] Rate limiter
- - [x] neural network
- - [ ] Crypto Chiphers
-    - [ ] Caeser Chiphers
- - [ ] Grep
- - [ ] OpenGL / ModernGL
+- [x] Garbage Collector
+- [x] Shell
+- [x] Regex Matcher
+- [x] Rate limiter
+- [x] neural network
+- [ ] Crypto Chiphers
+  - [ ] Caeser Chiphers
+- [ ] Grep
+- [ ] OpenGL / ModernGL
+- [ ] Networking
+  - [x] UDP sockets 
+  - [ ] TCP sockets
+  - [ ] Emulating end to end reliable flow control under unreliable conditions
+  - [ ] Non blocking task queue server
+  - [ ] Email Service
+  - [ ] Lightweight Custom Discovery Protocoal (LCDP) using raw sockets in posix C
