@@ -10,7 +10,7 @@
 - [ ] OpenGL / ModernGL
 - [ ] Networking
   - [x] UDP sockets 
-  - [ ] TCP sockets
+  - [x] TCP sockets
   - [ ] Emulating end to end reliable flow control under unreliable conditions
   - [ ] Non blocking task queue server
   - [ ] Email Service

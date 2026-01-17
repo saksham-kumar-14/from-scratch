@@ -36,12 +36,18 @@ int main() {
         }
 
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
-        if (sockfd < 0) exit(1);
+        if (sockfd < 0) {
+            perror("Socket creation failed");
+            exit(1);
+        }
 
         memset(&serv_addr, 0, sizeof(serv_addr));
         serv_addr.sin_family = AF_INET;
         serv_addr.sin_port = htons(PORT);
-        inet_pton(AF_INET, SERVER_IP, &serv_addr.sin_addr);
+        if (inet_pton(AF_INET, SERVER_IP, &serv_addr.sin_addr) <= 0) {
+            perror("Invalid address");
+            exit(1);
+        }
 
         if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
             perror("Connection Failed");
@@ -70,11 +76,13 @@ int main() {
         fclose(fp);
         close(sockfd);
 
-        printf("File encrypted. Original: %s, Encrypted: %s\n", filename, out_filename);
+        printf("The file is encrypted.\n");
+        printf("Original file: %s\n", filename);
+        printf("Encrypted file: %s\n", out_filename);
 
-        printf("Encrypt another file? (Yes/No): ");
+        printf("Do you want to encrypt another file? (Yes/No): ");
         scanf("%s", cont_choice);
-        if (strcmp(cont_choice, "No") == 0) break;
+        if (strcasecmp(cont_choice, "No") == 0) break;
     }
 
     return 0;

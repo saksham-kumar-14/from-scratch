@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
 
     // Bind Socket
     if (bind(sockfd, (const struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
-        perror("Bind failed");
+        perror("Bind failed\n");
         exit(EXIT_FAILURE);
     }
     printf("Server is running on port %d...\n", PORT); // `sudo lsof -i :6767` to verify if actually running or can do netstat
