@@ -1,3 +1,6 @@
 .DS_Store
 venv/
 .ipynb_checkpoints/
+run
+.zig-cache/
+zig-out/
