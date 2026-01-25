@@ -15,3 +15,7 @@
   - [ ] Non blocking task queue server
   - [ ] Email Service
   - [ ] Lightweight Custom Discovery Protocoal (LCDP) using raw sockets in posix C
+- [ ] FLAT
+  - [ ] CYK
+  - [ ] DFA - NFA
+- [x] Memory Allocator
