@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc main.c lib.c -o run -Wno-deprecated-declarations
+gcc main.c lib.c -o run
 echo "<< Running test >>"
 ./run
 rm run

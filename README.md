@@ -8,6 +8,9 @@
   - [ ] Caeser Chiphers
 - [ ] Grep
 - [ ] OpenGL / ModernGL
+    - [ ] Veronoi Diagram
+    - [ ] Ray tracing
+- [x] DNS 
 - [ ] Networking
   - [x] UDP sockets 
   - [x] TCP sockets
