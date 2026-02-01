@@ -6,11 +6,12 @@
 - [x] neural network
 - [ ] Crypto Chiphers
   - [ ] Caeser Chiphers
-- [ ] Grep
+- [ ] Custom Grep
 - [ ] OpenGL / ModernGL
     - [ ] Veronoi Diagram
     - [ ] Ray tracing
-- [x] DNS 
+- [x] DNS
+- [ ] Some Nix stuff
 - [ ] Networking
   - [x] UDP sockets 
   - [x] TCP sockets
