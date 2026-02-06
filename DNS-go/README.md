@@ -3,4 +3,5 @@ This is one of the many challenges from codecrafters
 
 ### TODO
 - [x] Make functional
-- [ ] Write more tests 
+- [ ] Write more tests
+- [ ] Refactor

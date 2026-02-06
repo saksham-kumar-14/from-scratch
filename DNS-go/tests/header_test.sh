@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Starting Go DNS Server..."
-go run ../app &
+go run ./app &
 
 SERVER_PID=$!
 
