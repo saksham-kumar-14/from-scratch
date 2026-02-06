@@ -1,5 +1,5 @@
 
-Something a = 5;
+a IsTheManWhoSoldTheWorldTo 5;
 while(a < 10) {
     printAsYouAre("Nullvana");
 }
