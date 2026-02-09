@@ -4,8 +4,18 @@
 - [x] Regex Matcher
 - [x] Rate limiter
 - [x] neural network
-- [ ] Crypto Chiphers
-  - [ ] Caeser Chiphers
+- [ ] Cryptography
+  - [ ] Set 1
+    - [ ] hex to base64
+    - [ ] Fixed XOR
+    - [ ] Single byte XOR cipher
+    - [ ] Detect single-character XOR
+    - [ ] Repeated key XOR
+    - [ ] AES in ECB mode
+    - [ ] Detect AES in ECB mode
+  - [ ] Set 2
+  - [ ] Set 3
+  - [ ] Set 4
 - [ ] Custom Grep
 - [ ] OpenGL / ModernGL
     - [ ] Veronoi Diagram
@@ -23,4 +33,4 @@
   - [ ] CYK
   - [ ] DFA - NFA
 - [x] Memory Allocator
-- [ ] Programming Language 
+- [ ] Programming Language
