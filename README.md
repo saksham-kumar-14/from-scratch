@@ -6,13 +6,6 @@
 - [x] neural network
 - [ ] Cryptography
   - [ ] Set 1
-    - [ ] hex to base64
-    - [ ] Fixed XOR
-    - [ ] Single byte XOR cipher
-    - [ ] Detect single-character XOR
-    - [ ] Repeated key XOR
-    - [ ] AES in ECB mode
-    - [ ] Detect AES in ECB mode
   - [ ] Set 2
   - [ ] Set 3
   - [ ] Set 4
@@ -34,3 +27,4 @@
   - [ ] DFA - NFA
 - [x] Memory Allocator
 - [ ] Programming Language
+- [ ] Jitter Measurement Tool 
