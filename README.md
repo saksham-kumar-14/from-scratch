@@ -27,4 +27,5 @@
   - [ ] DFA - NFA
 - [x] Memory Allocator
 - [ ] Programming Language
-- [ ] Jitter Measurement Tool 
+- [ ] Jitter Measurement Tool
+- [x] Reaching Definitions Analyser
