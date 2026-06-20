@@ -11,3 +11,4 @@
 - **[neuralnet](./neuralnet)**
 - **[rate-limiter](./rate-limiter)**
 - **[rd-analyser](./rd-analyser)**
+- **[rust-atomics-and-locks](./rust-atomics-and-locks)**
